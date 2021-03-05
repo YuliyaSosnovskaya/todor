@@ -33,7 +33,7 @@ export function createTask(todo, isDeleted) {
     resolvedTaskIcon.className = 'task-delete-icon';
     resolvedTaskIcon.setAttribute('src','img/refund.png');
     iconContainer.append(resolvedTaskIcon);
-    // 
+
     task.classList.add('taskInDeletedColumn')
     task.classList.add('forhoverTask');
 
