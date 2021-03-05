@@ -187,6 +187,13 @@ background: #4e49493a;
 }
 .column-task-container4 {
   background-color: #e0e0e0;
+  /* filter: grayscale(1); */
+}
+.forhoverTask:hover {
+  filter: none;
+}
+.taskInDeletedColumn {
+  cursor: default;
   filter: grayscale(1);
 }
 
@@ -231,6 +238,9 @@ background: #4e49493a;
 }
 .counter-done{
   background-color: #d8ecd8;
+}
+#counterDeleted {
+  background-color: #e0e0e0;
 }
 
 /*search*/
