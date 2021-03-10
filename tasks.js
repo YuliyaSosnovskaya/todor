@@ -1,5 +1,6 @@
 import {createModal} from './modal.js';
-import {appendTaskInColumn, counterForDeleted} from './index.js';
+import {appendTaskInColumn, counterForDeleted, getSearchParams, setSearchParams} from './index.js';
+
 
 export function createTask(todo, isDeleted) {
   const mainModalContainer = document.getElementById('mainModalContainer');
@@ -101,12 +102,12 @@ export function appendDeleteTaskInColumn() {
     while (deletedColumn.firstChild) {
       deletedColumn.removeChild(deletedColumn.firstChild);
     };
-
+    const filterFromLS = Number(getSearchParams('byUser'));
     const deletedTasksFromLS = JSON.parse(localStorage.getItem('deletedTasks'));
-    let filterFromLS = JSON.parse(localStorage.getItem('filter'));
-    const filteredTasks = filterFromLS.userId === 0
+    // let filterFromLS = JSON.parse(localStorage.getItem('filter'));
+    const filteredTasks = filterFromLS === 0
     ? deletedTasksFromLS
-    : deletedTasksFromLS.filter(task => task.userId === filterFromLS.userId);
+    : deletedTasksFromLS.filter(task => task.userId === filterFromLS);
 
     filteredTasks.forEach(taskObj => {
       const taskDOMEl = createTask(taskObj, true);

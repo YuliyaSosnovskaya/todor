@@ -30,18 +30,29 @@ const counterDone = document.getElementById('counterDone');
 
 /*modal*/
 
+export function getSearchParams (key) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(key);
+}
+export function setSearchParams (key, value) {
+  const params = new URLSearchParams(window.location.search);
+  params.set(key, value);
+  const {origin, pathname} = document.location;
+  const url = origin + pathname + '?' + params.toString();
 
-
-// let tasks = [];
-
-// const filter = {
-//   userId: 0
-// };
-
-if (!localStorage.getItem('filter')) {
- 
-  localStorage.setItem('filter',JSON.stringify({userId: 0}));
-};
+  history.pushState({[key]: value}, '', url); // change url without page reloading
+}
+function deleteSearchParams (key) {
+  const params = new URLSearchParams(window.location.search);
+  params.delete(key);
+  const {origin, pathname} = document.location;
+  const newParamsString = params.toString();
+  if (newParamsString === '') {
+    history.pushState({}, '', `${origin}${pathname}`);
+  } else {
+    history.pushState({}, '', `${origin}${pathname}?${newParamsString}`);
+  }
+}
 
 if (!localStorage.getItem('deletedTasks')) {
   
@@ -66,10 +77,9 @@ toggle.addEventListener('click', function (event) {
     deletedColumn.classList.add('width-column-with-deleted');
     mainColumnContainer.append(deletedColumn);
     appendDeleteTaskInColumn();
-    debugger;
     counterForDeleted ();
-
   }
+
   if (!event.currentTarget.checked) {
     const deletedColumn = document.getElementById('deletedColumn');
     toDoColumn.classList.remove('width-column-with-deleted');
@@ -104,8 +114,8 @@ function appendUsers(users) {
   });
 
   // set styles for init filter user
-  const filters = JSON.parse(localStorage.getItem('filter'));
-  const filterUserId = filters.userId;
+  const filterUserId = Number(getSearchParams('byUser'));
+
   const filterUser = users.find((user => user.id === filterUserId));
   let filterUserElAtrId = filterUser ? `${filterUser.name}-${filterUser.id}` : 'All-0';
   const filterUserDOMEl = document.getElementById(filterUserElAtrId);
@@ -131,13 +141,19 @@ function appendUsers(users) {
         const activeUserAvatar = activeUserEl.getElementsByClassName('container-for-avatar')[0];
         activeUserAvatar.classList.remove('container-for-avatar-hover');
         filterUserElAtrId = userEl.id;
-        localStorage.setItem('filter', JSON.stringify({userId: Number(filterUserElAtrId.split('-')[1])}));
+        const userId = filterUserElAtrId.split('-')[1];
+        if (Number(userId)) {
+          setSearchParams('byUser', Number(filterUserElAtrId.split('-')[1]));
+        } else {
+          // implement function to delete 'byUser' (key) from url and use it here
+          deleteSearchParams ('byUser');
+        }
+        // localStorage.setItem('filter', JSON.stringify({userId: Number(filterUserElAtrId.split('-')[1])}));
         const avatarEl = userEl.getElementsByClassName('container-for-avatar')[0];
         avatarEl.classList.add('container-for-avatar-hover');
         appendTaskInColumn();
         appendDeleteTaskInColumn();
         counterTasks ();
-        debugger;
         counterForDeleted();
       }
     })
@@ -157,11 +173,12 @@ export function appendTaskInColumn() {
   };
 
   let tasksFromLS = JSON.parse(localStorage.getItem('tasks'));
-  let filterFromLS = JSON.parse(localStorage.getItem('filter'));
+  let userId = Number(getSearchParams('byUser'));
+  // let filterFromLS = JSON.parse(localStorage.getItem('filter'));
 
-  const filteredTasks = filterFromLS.userId === 0
+  const filteredTasks = userId === 0
     ? tasksFromLS
-    : tasksFromLS.filter(task => task.userId === filterFromLS.userId);
+    : tasksFromLS.filter(task => task.userId === userId);
 
   filteredTasks.forEach(todo => {
     const task = createTask(todo);
