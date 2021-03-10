@@ -1,6 +1,7 @@
 import {createModal} from './modal.js';
-import {appendTaskInColumn, counterForDeleted, getSearchParams} from './index.js';
-
+import {addTasksToDeletedColumn, counterForDeletedColumn} from './deleted-column.js';
+import {appendTasksInColumns} from './columns.js';
+import {setItemToLS, getItemFromLS} from '../utils/local-storage.js';
 
 export function createTask(todo, isDeleted) {
   const mainModalContainer = document.getElementById('mainModalContainer');
@@ -39,20 +40,22 @@ export function createTask(todo, isDeleted) {
     task.classList.add('forhoverTask');
 
     resolvedTaskIcon.addEventListener('click', function() {
-      const tasksFromLS = JSON.parse(localStorage.getItem('tasks'));
-      localStorage.setItem('tasks', JSON.stringify([todo, ...tasksFromLS]));
-      appendTaskInColumn();
-      
-      const deletedTasksFromLS = JSON.parse(localStorage.getItem('deletedTasks'));
+      const tasksFromLS = getItemFromLS('tasks');
+      setItemToLS('tasks', [todo, ...tasksFromLS]);
+      appendTasksInColumns();
+      counterTasks();
+
+      const deletedTasksFromLS = getItemFromLS('deletedTasks');
       const deletedTaskIndex = deletedTasksFromLS.findIndex((t) => t.id === todo.id);
       deletedTasksFromLS.splice(deletedTaskIndex, 1);
-      localStorage.setItem('deletedTasks', JSON.stringify(deletedTasksFromLS));
-      appendDeleteTaskInColumn();
-      counterForDeleted ();
+      setItemToLS('deletedTasks', deletedTasksFromLS);
+      addTasksToDeletedColumn();
+      counterForDeletedColumn();
     })
   } else {
     // create and append delete icon
     const taskDeleteIcon = document.createElement('img');
+    taskDeleteIcon.draggable = false;
     taskDeleteIcon.className = 'task-edit-icon';
     taskDeleteIcon.setAttribute('src','img/trash.svg');
     taskDeleteIcon.addEventListener('click', () => {
@@ -63,6 +66,7 @@ export function createTask(todo, isDeleted) {
     iconContainer.append(taskDeleteIcon);
     // create and append edit icon
     const taskEditIcon = document.createElement('img');
+    taskEditIcon.draggable = false;
     taskEditIcon.className = 'task-edit-icon';
     taskEditIcon.setAttribute('src','img/free-icon-edit-2698233.svg');
     iconContainer.append(taskEditIcon);
@@ -78,34 +82,22 @@ export function createTask(todo, isDeleted) {
 
 export function deleteTask(task) {
     // remove task from localStorage('tasks')
-    const tasks = JSON.parse(localStorage.getItem('tasks'));
+    const tasks = getItemFromLS('tasks');
     const deletedTaskIndex = tasks.findIndex((t) => t.id === task.id);
     const deletedTask = tasks.splice(deletedTaskIndex, 1)[0];
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    setItemToLS('tasks', tasks)
 
     // add task to localStorage('deletedTasks')
+    const deletedTasks = getItemFromLS('deletedTasks');
+    setItemToLS('deletedTasks', [deletedTask, ...deletedTasks]);
+
+    // delete taskEl from DOM
     const currentTaskEl = document.getElementById(task.id);
-    const deletedTasks = JSON.parse(localStorage.getItem('deletedTasks'));
-    localStorage.setItem('deletedTasks', JSON.stringify([deletedTask, ...deletedTasks]));
-  
     currentTaskEl.remove();
 }
 
-export function appendDeleteTaskInColumn() {
-  const deletedColumn = document.getElementById('deleted');
-  if (deletedColumn) {
-    while (deletedColumn.firstChild) {
-      deletedColumn.removeChild(deletedColumn.firstChild);
-    };
-    const filterFromUrl = Number(getSearchParams('byUser'));
-    const deletedTasksFromLS = JSON.parse(localStorage.getItem('deletedTasks'));
-    const filteredTasks = filterFromUrl === 0
-    ? deletedTasksFromLS
-    : deletedTasksFromLS.filter(task => task.userId === filterFromUrl);
-
-    filteredTasks.forEach(taskObj => {
-      const taskDOMEl = createTask(taskObj, true);
-      deletedColumn.append(taskDOMEl);
-    })
-  }
+export function counterTasks () {
+  document.getElementById('counterToDo').innerHTML = document.getElementById('toDo').children.length;
+  document.getElementById('counterInProgress').innerHTML = document.getElementById('inProgress').children.length;
+  document.getElementById('counterDone').innerHTML = document.getElementById('done').children.length;
 }
