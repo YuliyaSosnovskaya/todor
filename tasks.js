@@ -1,5 +1,5 @@
 import {createModal} from './modal.js';
-import {appendTaskInColumn, counterForDeleted, getSearchParams, setSearchParams} from './index.js';
+import {appendTaskInColumn, counterForDeleted, getSearchParams} from './index.js';
 
 
 export function createTask(todo, isDeleted) {
@@ -38,13 +38,11 @@ export function createTask(todo, isDeleted) {
     task.classList.add('taskInDeletedColumn')
     task.classList.add('forhoverTask');
 
-
     resolvedTaskIcon.addEventListener('click', function() {
       const tasksFromLS = JSON.parse(localStorage.getItem('tasks'));
       localStorage.setItem('tasks', JSON.stringify([todo, ...tasksFromLS]));
       appendTaskInColumn();
       
-
       const deletedTasksFromLS = JSON.parse(localStorage.getItem('deletedTasks'));
       const deletedTaskIndex = deletedTasksFromLS.findIndex((t) => t.id === todo.id);
       deletedTasksFromLS.splice(deletedTaskIndex, 1);
@@ -92,9 +90,6 @@ export function deleteTask(task) {
   
     currentTaskEl.remove();
 }
-// export function resolvedTask (task) {
-//   const 
-// }
 
 export function appendDeleteTaskInColumn() {
   const deletedColumn = document.getElementById('deleted');
@@ -102,12 +97,11 @@ export function appendDeleteTaskInColumn() {
     while (deletedColumn.firstChild) {
       deletedColumn.removeChild(deletedColumn.firstChild);
     };
-    const filterFromLS = Number(getSearchParams('byUser'));
+    const filterFromUrl = Number(getSearchParams('byUser'));
     const deletedTasksFromLS = JSON.parse(localStorage.getItem('deletedTasks'));
-    // let filterFromLS = JSON.parse(localStorage.getItem('filter'));
-    const filteredTasks = filterFromLS === 0
+    const filteredTasks = filterFromUrl === 0
     ? deletedTasksFromLS
-    : deletedTasksFromLS.filter(task => task.userId === filterFromLS);
+    : deletedTasksFromLS.filter(task => task.userId === filterFromUrl);
 
     filteredTasks.forEach(taskObj => {
       const taskDOMEl = createTask(taskObj, true);

@@ -145,7 +145,6 @@ function appendUsers(users) {
         if (Number(userId)) {
           setSearchParams('byUser', Number(filterUserElAtrId.split('-')[1]));
         } else {
-          // implement function to delete 'byUser' (key) from url and use it here
           deleteSearchParams ('byUser');
         }
         // localStorage.setItem('filter', JSON.stringify({userId: Number(filterUserElAtrId.split('-')[1])}));
@@ -174,8 +173,6 @@ export function appendTaskInColumn() {
 
   let tasksFromLS = JSON.parse(localStorage.getItem('tasks'));
   let userId = Number(getSearchParams('byUser'));
-  // let filterFromLS = JSON.parse(localStorage.getItem('filter'));
-
   const filteredTasks = userId === 0
     ? tasksFromLS
     : tasksFromLS.filter(task => task.userId === userId);
