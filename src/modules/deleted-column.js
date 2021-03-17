@@ -47,15 +47,28 @@ export function addTasksToDeletedColumn() {
     while (deletedColumn.firstChild) {
       deletedColumn.removeChild(deletedColumn.firstChild);
     };
-    const filterFromUrl = Number(getSearchParams('byUser'));
+  
     const deletedTasksFromLS = getItemFromLS('deletedTasks');
-    const filteredTasks = filterFromUrl === 0
-      ? deletedTasksFromLS
-      : deletedTasksFromLS.filter(task => task.userId === filterFromUrl);
+    const userId = Number(getSearchParams('byUser'));
+    const priority = getSearchParams('priority') ;
+
+    let filteredTasks = [...deletedTasksFromLS];
+    // filter by user
+    if (userId !== 0) {
+      filteredTasks = filteredTasks.filter(task => task.userId === userId)
+    }
+
+    // filter by priority
+    if (priority) {
+      filteredTasks = filteredTasks.filter(task => task.priority === priority);
+    }
 
     filteredTasks.forEach(taskObj => {
       const taskDOMEl = createTask(taskObj, true);
       deletedColumn.append(taskDOMEl);
-    })
+    });
+    
+    counterForDeletedColumn ();
   }
+
 }

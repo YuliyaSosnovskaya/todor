@@ -14,7 +14,7 @@ export function createTask(todo, isDeleted) {
   task.className = 'task';
   task.id = todo.id;
   
-  /*drag&drop*/
+  /*draggable*/
   task.draggable = !isDeleted;
   taskIdAvatarContainer.className = 'task-id-avatar-container';
 
@@ -28,13 +28,33 @@ export function createTask(todo, isDeleted) {
   taskDescription.innerHTML = todo.title;
 
   iconContainer.className = 'task-edit-icon-container';
-  
+  const containerForDelAndResol = document.createElement('div');
+ 
+
+  const priorityIcon = document.createElement('div');
+  priorityIcon.className = 'task-priority-icon';
+  priorityIcon.draggable = false;
+
+  if(todo.priority === 'middle') {
+    priorityIcon.classList.add('priority-middle');
+
+  }
+  if(todo.priority === 'low') {
+    priorityIcon.classList.add('priority-low');
+  }
+  if(todo.priority === 'height') {
+    priorityIcon.classList.add('priority-height');  }
+
+  iconContainer.append(priorityIcon);
+  iconContainer.append(containerForDelAndResol);
+
+
   if (isDeleted) {
     // create and append recovery icon
     const resolvedTaskIcon = document.createElement('img');
     resolvedTaskIcon.className = 'task-delete-icon';
     resolvedTaskIcon.setAttribute('src','img/refund.png');
-    iconContainer.append(resolvedTaskIcon);
+    containerForDelAndResol.append(resolvedTaskIcon);
 
     task.classList.add('taskInDeletedColumn')
     task.classList.add('forhoverTask');
@@ -63,13 +83,13 @@ export function createTask(todo, isDeleted) {
       mainModalContainer.append(deleteModalEl);
       mainModalContainer.classList.add('window-inactive');
     });
-    iconContainer.append(taskDeleteIcon);
+    containerForDelAndResol.append(taskDeleteIcon);
     // create and append edit icon
     const taskEditIcon = document.createElement('img');
     taskEditIcon.draggable = false;
     taskEditIcon.className = 'task-edit-icon';
     taskEditIcon.setAttribute('src','img/free-icon-edit-2698233.svg');
-    iconContainer.append(taskEditIcon);
+    containerForDelAndResol.append(taskEditIcon);
   }
 
   taskIdAvatarContainer.append(taskId);
