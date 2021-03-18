@@ -2,6 +2,9 @@
  import {appendTasksInColumns} from './columns.js';
  import {addTasksToDeletedColumn} from './deleted-column.js';
 
+ const priorityButton = document.getElementById('priorityButton');
+ const commonDivForSelect = document.getElementById('commonDivForSelect');
+
  export function createPrioritySelect (optionsList) {
   const priorityContainer = document.createElement('div');
   priorityContainer.className = 'priority-container';
@@ -53,9 +56,9 @@
 
   });
 
+
   priorityButton.addEventListener('click', function () {
     if(!document.getElementsByClassName('common-div-for-select')[0]) {
-      debugger;
       commonDivForSelect.classList.add('common-div-for-select');
     }else {
       commonDivForSelect.classList.remove('common-div-for-select');
@@ -65,16 +68,3 @@
 
 return priorityContainer;
 }
-
-
-
-
-
-
-
-
-const priorityButton = document.getElementById('priorityButton');
-const commonDivForSelect = document.getElementById('commonDivForSelect');
-
-
- 

@@ -116,8 +116,8 @@ export function appendTasksInColumns() {
   }
 
   if (description) {
-    description.toLowerCase();
-    filteredTasks = filteredTasks.filter(task => task.title.includes(description.toLowerCase()));
+    
+    filteredTasks = filteredTasks.filter(task => task.title.toLowerCase().includes(description.toLowerCase()));
   }
 
   filteredTasks.forEach(todo => {

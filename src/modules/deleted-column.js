@@ -51,6 +51,7 @@ export function addTasksToDeletedColumn() {
     const deletedTasksFromLS = getItemFromLS('deletedTasks');
     const userId = Number(getSearchParams('byUser'));
     const priority = getSearchParams('priority') ;
+    const description = getSearchParams('desc');
 
     let filteredTasks = [...deletedTasksFromLS];
     // filter by user
@@ -61,6 +62,10 @@ export function addTasksToDeletedColumn() {
     // filter by priority
     if (priority) {
       filteredTasks = filteredTasks.filter(task => task.priority === priority);
+    }
+    if (description) {
+      description.toLowerCase();
+      filteredTasks = filteredTasks.filter(task => task.title.includes(description.toLowerCase()));
     }
 
     filteredTasks.forEach(taskObj => {
