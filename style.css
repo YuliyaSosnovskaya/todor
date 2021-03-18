@@ -391,7 +391,7 @@ background: #4e49493a;
   justify-content: space-between;
   margin: 0 20px;
 }
-.button-cancel,.button-delete{
+.button-cancel,.button-delete,.button-save{
   padding: 7px 25px 10px;
   border-radius: 15px;
   border: 1px solid #c5e5fd;
@@ -413,8 +413,12 @@ background: #4e49493a;
   color: white;
 
 }
-
-
+.button-save:hover {
+  cursor: pointer;
+  background-color:  #61ae2c; ;
+  color: white;
+}
+/*toggle*/
 .span-checkbox {
   letter-spacing: 0.5px;
   font-size: 17px;
@@ -528,4 +532,68 @@ label:active:after {
 	justify-content: flex-end;
 	align-items: center;
   margin-right: 15px;
+<<<<<<< HEAD
 } */
+=======
+}
+
+/*modal-detail-container*/
+.modal-detail-container {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color:#f9fbe7;
+  justify-content: space-between;
+  width: 50%;
+  height: 50%;
+  z-index: 1;
+  padding: 5px 10px;
+}
+.id-avatar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.modal-detail-id {
+  width: 100px;
+  font-size: 22px;
+}
+
+.modal-avatar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+
+}
+.avatar-detail-modal {
+  margin: 0 auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.description-modal {
+  display: flex;
+  flex-direction: column;
+}
+.span-description-modal {
+  font-size: 20px;
+}
+textarea {
+  width: 100%;
+  margin-top: 5px;
+  min-height: 50px;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid #a9a9a900;
+  box-shadow: 2px 3px 7px -1px #80808040;
+}
+.modal-detail-button-container{
+  display: flex;
+  justify-content: space-around;
+}
+>>>>>>> styles for modaldetails
