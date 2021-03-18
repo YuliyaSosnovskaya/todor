@@ -97,11 +97,28 @@ export function appendTasksInColumns() {
     doneColumn.removeChild(doneColumn.firstChild);
   };
 
-  let tasksFromLS = getItemFromLS('tasks');
-  let userId = Number(getSearchParams('byUser'));
-  const filteredTasks = userId === 0
-    ? tasksFromLS
-    : tasksFromLS.filter(task => task.userId === userId);
+  const tasksFromLS = getItemFromLS('tasks');
+  const userId = Number(getSearchParams('byUser'));
+  const priority = getSearchParams('priority') ;
+
+  const description = getSearchParams('desc');
+
+
+  let filteredTasks = [...tasksFromLS];
+  // filter by user
+  if (userId !== 0) {
+    filteredTasks = filteredTasks.filter(task => task.userId === userId)
+  }
+
+  // filter by priority
+  if (priority) {
+    filteredTasks = filteredTasks.filter(task => task.priority === priority);
+  }
+
+  if (description) {
+    
+    filteredTasks = filteredTasks.filter(task => task.title.toLowerCase().includes(description.toLowerCase()));
+  }
 
   filteredTasks.forEach(todo => {
     const task = createTask(todo);
@@ -116,6 +133,8 @@ export function appendTasksInColumns() {
       inProgressColumn.append(task);
     }
   });
+
+  counterTasks();
 }
 
 export function setDragNDropListeners() {
