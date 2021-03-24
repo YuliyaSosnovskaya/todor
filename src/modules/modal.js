@@ -35,6 +35,8 @@ export function createModal (todo) {
     mainModalContainer.classList.remove('window-inactive'); 
   });
 
+  
+
   modalContainer.className = 'modal-container';
   modalContainer.id = 'modalContainer';
 

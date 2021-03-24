@@ -13,6 +13,7 @@ export function createSearchDesc () {
 
   const descInput = document.createElement('input');
   descInput.className = 'desc-input';
+  descInput.setAttribute('placeholder','type a description...');
   descInput.type = 'text';
   descInput.id = 'descInput';
   
