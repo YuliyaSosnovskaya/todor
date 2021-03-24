@@ -11,12 +11,16 @@ createAndAppendUsersSearchPanel();
 
 // create and prepend priority filter DOM element
 const toggleContainer = document.getElementsByClassName('toggle-container')[0];
-const priorityFilterDOMEl = createPrioritySelect(['all','low','middle','height']);
-toggleContainer.prepend(priorityFilterDOMEl);
+const searchPriorityContainer = document.createElement('div');
+searchPriorityContainer.style.display = 'flex';
+
+const priorityFilterDOMEl = createPrioritySelect();
+searchPriorityContainer.append(priorityFilterDOMEl);
+toggleContainer.prepend(searchPriorityContainer);
 
 //create and append searchByDescription DOM element
 const searchDesc = createSearchDesc();
-toggleContainer.prepend(searchDesc);
+searchPriorityContainer.prepend(searchDesc);
 
 // create and append "TODO", "IN PROGRESS", "DONE" columns
 const mainContainer = document.getElementById('main-container');

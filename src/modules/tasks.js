@@ -2,6 +2,7 @@ import {createModal} from './modal.js';
 import {addTasksToDeletedColumn, counterForDeletedColumn} from './deleted-column.js';
 import {appendTasksInColumns} from './columns.js';
 import {setItemToLS, getItemFromLS} from '../utils/local-storage.js';
+import {createDetailModal} from './detailModal.js';
 
 export function createTask(todo, isDeleted) {
   const mainModalContainer = document.getElementById('mainModalContainer');
@@ -78,11 +79,13 @@ export function createTask(todo, isDeleted) {
     taskDeleteIcon.draggable = false;
     taskDeleteIcon.className = 'task-edit-icon';
     taskDeleteIcon.setAttribute('src','img/trash.svg');
+
     taskDeleteIcon.addEventListener('click', () => {
       const deleteModalEl = createModal(todo);
       mainModalContainer.append(deleteModalEl);
       mainModalContainer.classList.add('window-inactive');
     });
+
     containerForDelAndResol.append(taskDeleteIcon);
     // create and append edit icon
     const taskEditIcon = document.createElement('img');
@@ -90,6 +93,15 @@ export function createTask(todo, isDeleted) {
     taskEditIcon.className = 'task-edit-icon';
     taskEditIcon.setAttribute('src','img/free-icon-edit-2698233.svg');
     containerForDelAndResol.append(taskEditIcon);
+//появление модалки при клике на карандаш
+    taskEditIcon.addEventListener('click', function () {
+
+      const modalDetail = createDetailModal(todo.id);
+      debugger;
+      mainModalContainer.append(modalDetail);
+      mainModalContainer.classList.add('window-inactive');
+
+    })
   }
 
   taskIdAvatarContainer.append(taskId);
