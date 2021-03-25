@@ -88,6 +88,10 @@ export function createDetailModal (isNew, taskId) {
   descrTextarea.value = todo.title;
   descriptionContainer.append(descrTextarea);
 
+  descrTextarea.addEventListener('input', function () {
+    descrTextarea.classList.remove('invalid-textarea');
+  })
+
   const dropdawnContainer = document.createElement('div');
   dropdawnContainer.className = 'dropdawns-container';
   modalDetailContainer.append(dropdawnContainer);
@@ -152,9 +156,14 @@ export function createDetailModal (isNew, taskId) {
   //обрабочик на save
   buttonSave.addEventListener('click', function () {
     let newDescr =  descrTextarea.value;
+    debugger;
+    if(newDescr.trim().length === 0) {
+      descrTextarea.classList.add('invalid-textarea');
+      return;
+    }
     let newUser = userSelectButton.innerHTML;
     todo.title = newDescr;
-
+   
     if(isNew) {
       tasksFromLS.unshift(todo);
     }

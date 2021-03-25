@@ -624,6 +624,10 @@ textarea {
   background-color: #eeeeee;
   font-size: 16px;
 }
+.invalid-textarea {
+  border-color:red;
+  box-shadow: 2px 3px 7px -1px #b63030;
+}
 .modal-detail-button-container{
   display: flex;
   justify-content: space-between;
