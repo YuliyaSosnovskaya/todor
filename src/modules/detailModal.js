@@ -4,9 +4,21 @@ import {counterTasks} from './tasks.js';
 import createSelect from './select-field.js';
 import users from '../../users.js';
 
-export function createDetailModal (taskId) {
+export function createDetailModal (isNew, taskId) {
   const tasksFromLS = getItemFromLS('tasks');
-  let todo = tasksFromLS.find((task) => task.id === taskId);
+  const deletedTasksFromLS = getItemFromLS('deletedTasks');
+  let  todo = {
+    avatar: "./img/boy.png",
+    priority: "low",
+    id: tasksFromLS.length + deletedTasksFromLS.length + 1,
+    status: "TODO",
+    title: "",
+    userId: 1
+  };
+  if(!isNew) {
+    todo = tasksFromLS.find((task) => task.id === taskId);
+  }
+   
 
   const mainModalContainer = document.getElementById('mainModalContainer');
   const modalDetailContainer = document.createElement('div');
@@ -18,7 +30,9 @@ export function createDetailModal (taskId) {
 
   const modalDetailId = document.createElement('div');
   modalDetailId.className = 'modal-detail-id';
+  
   modalDetailId.innerHTML = `ID: ${todo.id}`;
+
   idAvatarContainer.append(modalDetailId);
 
   const modalAvatarContainer = document.createElement('div');
@@ -42,7 +56,6 @@ export function createDetailModal (taskId) {
 
   function onChangeUserName(newUserName) {
 
-    
     let findUser = users.find((user) => user.name == newUserName );
 
     let newAvatar = findUser.avatar;
@@ -142,7 +155,9 @@ export function createDetailModal (taskId) {
     let newUser = userSelectButton.innerHTML;
     todo.title = newDescr;
 
-
+    if(isNew) {
+      tasksFromLS.unshift(todo);
+    }
     setItemToLS('tasks', tasksFromLS);
     appendTasksInColumns();
     counterTasks();

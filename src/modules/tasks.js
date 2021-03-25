@@ -96,7 +96,7 @@ export function createTask(todo, isDeleted) {
 //появление модалки при клике на карандаш
     taskEditIcon.addEventListener('click', function () {
 
-      const modalDetail = createDetailModal(todo.id);
+      const modalDetail = createDetailModal(false, todo.id);
       debugger;
       mainModalContainer.append(modalDetail);
       mainModalContainer.classList.add('window-inactive');
