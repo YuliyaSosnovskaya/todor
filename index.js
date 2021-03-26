@@ -5,8 +5,9 @@ import {getItemFromLS, setItemToLS} from './src/utils/local-storage.js';
 import createAndAppendUsersSearchPanel from './src/modules/users-search-panel.js';
 import {createPrioritySelect} from '/src/modules/priority.js';
 import {createSearchDesc} from '/src/modules/searchByDescription.js';
+import {createHeader} from './src/modules/header.js';
 
-
+createHeader();
 createAndAppendUsersSearchPanel();
 
 // create and prepend priority filter DOM element

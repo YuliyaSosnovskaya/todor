@@ -1,4 +1,5 @@
 import { setItemToLS, getItemFromLS } from "../utils/local-storage.js";
+import { hideModalBackground } from '../utils/modal-background.js';
 import {appendTasksInColumns} from './columns.js';
 import {counterTasks} from './tasks.js';
 import createSelect from './select-field.js';
@@ -20,9 +21,9 @@ export function createDetailModal (isNew, taskId) {
   }
    
 
-  const mainModalContainer = document.getElementById('mainModalContainer');
   const modalDetailContainer = document.createElement('div');
   modalDetailContainer.className = 'modal-detail-container';
+  modalDetailContainer.id = 'modal-window';
 
   const idAvatarContainer = document.createElement('div');
   idAvatarContainer.className = 'id-avatar-container';
@@ -45,7 +46,7 @@ export function createDetailModal (isNew, taskId) {
   
   modalAvatarContainer.append(avatar);
 
-//вставить дропдаун
+  //вставить дропдаун
   let optionsName = users.map((user) => {
     return user.name;
   });
@@ -144,9 +145,8 @@ export function createDetailModal (isNew, taskId) {
 
   buttonCancel.addEventListener('click', function () {
     modalDetailContainer.remove();
-    mainModalContainer.classList.remove('window-inactive');
+    hideModalBackground();
   })
-
 
   const buttonSave = document.createElement('div');
   buttonSave.className = 'button-save';
@@ -171,8 +171,7 @@ export function createDetailModal (isNew, taskId) {
     appendTasksInColumns();
     counterTasks();
     modalDetailContainer.remove();
-    mainModalContainer.classList.remove('window-inactive');
-    
+    hideModalBackground();    
   })
 
   return modalDetailContainer;

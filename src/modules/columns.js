@@ -2,6 +2,7 @@ import {getSearchParams} from '../utils/search-params.js'
 import {getItemFromLS, setItemToLS} from '../utils/local-storage.js';
 import {createTask, counterTasks} from './tasks.js';
 import {createDetailModal} from './detailModal.js';
+import { showModalBackground } from '../utils/modal-background.js';
 
 export function createColumn(columnName) {
   const columnDOMEl = document.createElement('div');
@@ -21,10 +22,9 @@ export function createColumn(columnName) {
     plusIcon.setAttribute('src','img/svg');
     plusIcon.className = 'plus-icon';
     plusIcon.addEventListener('click', function() {
-      const mainModalContainer = document.getElementById('mainModalContainer');
       const modalDetail = createDetailModal(true);
-      mainModalContainer.append(modalDetail);
-      mainModalContainer.classList.add('window-inactive');
+      document.body.append(modalDetail);
+      showModalBackground();
     });
      
 
