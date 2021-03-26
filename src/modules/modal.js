@@ -1,8 +1,8 @@
 import {deleteTask, counterTasks} from './tasks.js';
 import {addTasksToDeletedColumn, counterForDeletedColumn} from './deleted-column.js';
+import { hideModalBackground } from '../utils/modal-background.js';
 
 export function createModal (todo) {
-  const mainModalContainer = document.getElementById('mainModalContainer');
   const modalContainer = document.createElement('div');
   const header = document.createElement('div');
   const buttonContainer = document.createElement('div');
@@ -23,7 +23,7 @@ export function createModal (todo) {
   
   buttonCancel.addEventListener('click',function () {
     modalContainer.remove();
-    mainModalContainer.classList.remove('window-inactive');
+    hideModalBackground();
   });
 
   buttonDelete.addEventListener('click',function () {
@@ -32,13 +32,13 @@ export function createModal (todo) {
     addTasksToDeletedColumn();
     counterForDeletedColumn();
     modalContainer.remove();
-    mainModalContainer.classList.remove('window-inactive'); 
+    hideModalBackground();
   });
 
   
 
   modalContainer.className = 'modal-container';
-  modalContainer.id = 'modalContainer';
+  modalContainer.id = 'modal-window';
 
   modalContainer.append(header);
   modalContainer.append(buttonContainer);

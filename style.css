@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
 *{
   margin: 0;
   padding:0;
@@ -9,14 +11,16 @@
 .main-modal-container {
   width: 100%;
   height:100%;
-  display:none;
-}
-.window-inactive {
+  /* display:none; */
   display: block;
   /* pointer-events: none; */
   background-color: #38323894;
   position: absolute;
   z-index: 100;
+  display: none;
+}
+.window-inactive {
+  
 }
 .main-container {
   margin: 0 20px;
@@ -26,11 +30,44 @@
 }
 .header{
   /* background-color: burlywood; */
-  min-height: 100px;
+  min-height: 65px;
   flex-grow: 0;
   flex-shrink: 0;
+  display: flex;
+  justify-content:space-between;
 
 }
+
+.logo{
+  font-size: 57px;
+  color: #bf360c;
+  font-family: 'Indie Flower', cursive;
+}
+.container-for-login{
+  display: flex;
+  margin-top: 10px;
+  height: 27px;
+}
+.hello{
+  color: #5a5a59;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-family: cursive;
+  padding-right: 10px;
+  border-right: 2px solid gray;
+}
+.button-login{
+  margin-left: 15px;
+  font-size: 18px;
+  text-align: center;
+  font-family: cursive;
+}
+.button-login:hover {
+  cursor : pointer;
+  color: #655b5b;
+}
+
+
 /*scrollbar*/
 ::-webkit-scrollbar {
   width: 5px;
@@ -240,7 +277,8 @@ background: #4e49493a;
   background-color:#fafafa;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 250px); /*-------------------------- */
+  height: calc(100vh - 265px); 
+  /*-------------------------- */
 }
 
 .width-column-with-deleted {
@@ -571,7 +609,7 @@ label:active:after {
   justify-content: space-between;
   width: 45%;
   height: 55%;
-  z-index: 1;
+  z-index: 200;
   padding: 15px 20px;
   border-radius: 10px;
 }
