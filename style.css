@@ -35,8 +35,6 @@
   flex-shrink: 0;
   display: flex;
   justify-content:space-between;
-  padding: 0 10px;
-
 }
 
 .logo{
@@ -50,7 +48,7 @@
   height: 27px;
 }
 .hello{
-  color: #5a5a59;
+  color: #fd774e;
   font-size: 18px;
   letter-spacing: 1px;
   font-family: cursive;
@@ -739,4 +737,18 @@ textarea {
 }
 .visible-error-span {
   visibility:visible;
+}
+.icon {
+  margin-left : 10px;
+
+}
+.icon:hover {
+  cursor:pointer;
+}
+
+.body-night {
+  background-image: linear-gradient(to bottom, rgb(12, 16, 64), rgb(14, 15, 61), rgb(17, 14, 57), rgb(19, 14, 54), rgb(21, 13, 50), rgb(24, 12, 47), rgb(26, 11, 43), rgb(29, 10, 40), rgb(31, 9, 36), rgb(33, 9, 33), rgb(36, 8, 29), rgb(38, 7, 26));  
+}
+.text-night {
+  color:#d5dde1;
 }

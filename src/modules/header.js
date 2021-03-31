@@ -51,6 +51,7 @@ export function createHeader () {
   
   containerForLogIn.append(buttonLogIn);
   mainContainer.prepend(header);
+  dayNight ();
 }
 
 function createAndAppendLogoModal() {
@@ -162,4 +163,43 @@ function createAndAppendLogoModal() {
   })
 
   document.body.append(modalContainer);
+}
+
+let theme = 'day';
+
+export function dayNight () {
+  const header = document.getElementsByClassName('container-for-login')[0];
+  const icon = document.createElement('img');
+  icon.setAttribute('src','../../img/day.png');
+  icon.className = 'icon';
+  header.append(icon);
+
+  
+
+
+  icon.addEventListener('click', function () {
+    const priority = document.getElementsByClassName('priority-span')[0];
+    const toggle = document.getElementsByClassName('span-checkbox')[0];
+    const logo = document.getElementsByClassName('logo')[0];
+    const loginButton = document.getElementById('loginButton');
+   if(theme == 'day') {
+     theme = 'night';
+     document.body.classList.add('body-night');
+     icon.setAttribute('src','../../img/night.png');
+     priority.classList.add('text-night');
+     toggle.classList.add('text-night');
+     logo.classList.add('text-night');
+     loginButton.classList.add('text-night');
+    return;
+    }
+     theme = 'day';
+     document.body.classList.remove('body-night');
+     icon.setAttribute('src','../../img/day.png');
+     priority.classList.remove('text-night');
+     toggle.classList.remove('text-night');
+     logo.classList.remove('text-night');
+     loginButton.classList.remove('text-night');
+    
+  })
+
 }
