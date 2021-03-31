@@ -22,6 +22,11 @@ export function createColumn(columnName) {
     plusIcon.setAttribute('src','img/svg');
     plusIcon.className = 'plus-icon';
     plusIcon.addEventListener('click', function() {
+      //проверка или пользователь залогинился
+      if(!getItemFromLS('auth')) {
+        alert('creating new tasks is available only for registered users');
+        return;
+      }
       const modalDetail = createDetailModal(true);
       document.body.append(modalDetail);
       showModalBackground();
@@ -159,6 +164,13 @@ export function setDragNDropListeners() {
     }
 
     goalColumn.classList.remove('hovered');
+
+    // проверка auth
+
+    if(!getItemFromLS('auth')) {
+      alert('changing the status of tasks is available only for registered users');
+      return;
+    }
 
     let tasks = getItemFromLS('tasks');
 
