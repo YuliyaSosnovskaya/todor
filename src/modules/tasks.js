@@ -62,6 +62,10 @@ export function createTask(todo, isDeleted) {
     task.classList.add('forhoverTask');
 
     resolvedTaskIcon.addEventListener('click', function() {
+      if(!getItemFromLS('auth')) {
+        alert('task recovery is available only for registered users');
+        return;
+      }
       const tasksFromLS = getItemFromLS('tasks');
       setItemToLS('tasks', [todo, ...tasksFromLS]);
       appendTasksInColumns();
@@ -82,6 +86,10 @@ export function createTask(todo, isDeleted) {
     taskDeleteIcon.setAttribute('src','img/trash.svg');
 
     taskDeleteIcon.addEventListener('click', () => {
+      if(!getItemFromLS('auth')) {
+        alert('deleting tasks is available only for registered users');
+        return;
+      }
       const deleteModalEl = createModal(todo);
       document.body.append(deleteModalEl);
       showModalBackground();
@@ -96,6 +104,10 @@ export function createTask(todo, isDeleted) {
     containerForDelAndResol.append(taskEditIcon);
     //появление модалки при клике на карандаш
     taskEditIcon.addEventListener('click', function () {
+      if(!getItemFromLS('auth')) {
+        alert('editing tasks is available only for registered users')
+        return;
+      }
       const modalDetail = createDetailModal(false, todo.id);
       document.body.append(modalDetail);
       showModalBackground();
