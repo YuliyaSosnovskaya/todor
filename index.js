@@ -32,13 +32,14 @@ mainContainer.append(columns);
 if (!getItemFromLS('deletedTasks')) {
   setItemToLS('deletedTasks', []);
 };
-
+//при выполнении запроса 
 fetchAllTodos()
   .then(appendTasksInColumns)
   .then(setDragNDropListeners)
   .then(counterTasks);
-
+//запрос на сервер для получения тасков
 async function fetchAllTodos () {
+  //проверка или уже есть таски в LS
   if(getItemFromLS('tasks')) {
     return;
   }
@@ -48,7 +49,7 @@ async function fetchAllTodos () {
   setItemToLS('tasks', tasks);
 };
 
- 
+// добавление таскам с сервера приоритета и статуса 
 function setInitialStaff(task) {
   let priority = 'middle';
   let status = 'TODO';

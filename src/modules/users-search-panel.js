@@ -5,6 +5,7 @@ import {getSearchParams, setSearchParams, deleteSearchParams} from '../utils/sea
 import {counterTasks} from './tasks.js';
 import {appendTasksInColumns} from './columns.js';
 
+// панель с пользователями
 function createUserElement(user) {
   const userEl = document.createElement('div');
   const containerForAvatar = document.createElement('div');
@@ -18,11 +19,12 @@ function createUserElement(user) {
   containerForAvatar.className = 'container-for-avatar';
   nameUser.className = 'name-search-user';
   nameUser.innerHTML = user.name;
+  // добавляем userEL.id состоящее из имени и id user
   userEl.id = `${user.name}-${user.id}`;
   containerForAvatar.append(avatar);
   userEl.append(containerForAvatar);
   userEl.append(nameUser);
-
+  // не перетаскиваемый элемент avatar (у картинок по умолчанию перетаскиваемый)
   avatar.draggable = false;
 
   return userEl;
@@ -30,7 +32,7 @@ function createUserElement(user) {
 
 export default function createAndAppendUsersSearchPanel() {
   const usersSearchPanel = document.getElementById('sort-container');
-
+  // создаем all user 
   const allUsersEl = createUserElement(
     {
       name: 'All',
@@ -39,15 +41,15 @@ export default function createAndAppendUsersSearchPanel() {
     }
   );
   usersSearchPanel.append(allUsersEl);
-
+  // для каждого user создаем иконку и добавляем в панель 
   users.forEach(user => {
     const userDOMEl = createUserElement(user);
     usersSearchPanel.append(userDOMEl);
   });
 
-  // set styles for init filter user
+  // достаём из SP(url) какой пользователь сейчас выбран 
   const filterUserId = Number(getSearchParams('byUser'));
-
+  // set styles for init filter user
   // изначальное подсвечивание avatar у юзера совподающего по byUser из URL (filterUserId выше)
   // 1. находим нужного юзера из списка юзеров (нашего файла) по filterUserId (byUser из URL)
   const filterUserObj = users.find((user => user.id === filterUserId));
@@ -58,19 +60,26 @@ export default function createAndAppendUsersSearchPanel() {
   // 4. подсвечиваем avatar у найденного юзера (filterUserDOMEl)
   filterUserDOMEl.getElementsByClassName('container-for-avatar')[0].classList.add('container-for-avatar-hover');
 
-  // set events handlers (обработчики событий) to all users elements
+  
+  // массив всех иконок с юзерами 
   const usersElements = document.getElementsByClassName('search-user');
+  // set events handlers (обработчики событий) to all users elements
   for (let userEl of usersElements) {
+    //курсор над элементом 
     userEl.addEventListener('mouseover', function () {
+      // если элемент уже подсвечен (выбран) то не надо ,иначе подсвечиваем
       if (userEl.id === userElIdAttribute) return;
       const avatarEl = userEl.getElementsByClassName('container-for-avatar')[0];
       avatarEl.classList.add('container-for-avatar-hover');
     });
+    //при отведении курсора 
     userEl.addEventListener('mouseout', function (event) {
+      // если это с выбранного элемента то ничего не делаем, иначе удаляем подсветку
       if (userEl.id === userElIdAttribute) return;
       const avatarEl = userEl.getElementsByClassName('container-for-avatar')[0];
       avatarEl.classList.remove('container-for-avatar-hover');
     });
+    // обработчик на клик 
     userEl.addEventListener('click', function () {
       // если кликнули по новому юзеру
       if (userElIdAttribute !== userEl.id) {
@@ -78,7 +87,6 @@ export default function createAndAppendUsersSearchPanel() {
         const activeUserEl = document.getElementById(userElIdAttribute);
         const activeUserAvatar = activeUserEl.getElementsByClassName('container-for-avatar')[0];
         activeUserAvatar.classList.remove('container-for-avatar-hover');
-
         userElIdAttribute = userEl.id;
 
         // меняем byUser в URL

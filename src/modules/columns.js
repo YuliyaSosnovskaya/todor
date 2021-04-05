@@ -6,20 +6,17 @@ import { showModalBackground } from '../utils/modal-background.js';
 
 export function createColumn(columnName) {
   const columnDOMEl = document.createElement('div');
-
   const columnNameContainer = document.createElement('div');
   const columnNameDOMEl = document.createElement('div');
   columnNameDOMEl.className = 'column-name';
-
   const colorContainer = document.createElement('div');
-
   const counterDOMEl = document.createElement('div');
   counterDOMEl.className = 'counter';
 
   if (columnName === 'todo') {
     // append plus icon to TODO column
     const plusIcon = document.createElement('img');
-    plusIcon.setAttribute('src','img/svg');
+    plusIcon.setAttribute('src', '../../img/svg');
     plusIcon.className = 'plus-icon';
     plusIcon.addEventListener('click', function() {
       //проверка или пользователь залогинился
@@ -27,14 +24,13 @@ export function createColumn(columnName) {
         alert('creating new tasks is available only for registered users');
         return;
       }
+      //modal window is open
       const modalDetail = createDetailModal(true);
       document.body.append(modalDetail);
       showModalBackground();
     });
      
-
     columnNameContainer.append(plusIcon);
-
     colorContainer.className = 'column column-task-container1';
     colorContainer.id = 'toDo';
     columnDOMEl.className = 'todo-column';
@@ -78,13 +74,12 @@ export function createColumn(columnName) {
 
   columnNameContainer.append(counterDOMEl);
   columnNameContainer.append(columnNameDOMEl);
-
   columnDOMEl.append(columnNameContainer);
   columnDOMEl.append(colorContainer);
 
   return columnDOMEl;
 }
-
+//создаются все колонки и append в общий контейнер
 export function createColumns () {
   const columnsContainer = document.createElement('div');
   columnsContainer.className = 'main-column-container';
@@ -115,9 +110,7 @@ export function appendTasksInColumns() {
   const tasksFromLS = getItemFromLS('tasks');
   const userId = Number(getSearchParams('byUser'));
   const priority = getSearchParams('priority') ;
-
   const description = getSearchParams('desc');
-
 
   let filteredTasks = [...tasksFromLS];
   // filter by user
@@ -129,12 +122,11 @@ export function appendTasksInColumns() {
   if (priority) {
     filteredTasks = filteredTasks.filter(task => task.priority === priority);
   }
-
+  //filter by description
   if (description) {
-    
     filteredTasks = filteredTasks.filter(task => task.title.toLowerCase().includes(description.toLowerCase()));
   }
-
+  //sort by status 
   filteredTasks.forEach(todo => {
     const task = createTask(todo);
 
@@ -144,7 +136,7 @@ export function appendTasksInColumns() {
     if (todo.status == 'DONE') {
       doneColumn.append(task);
     } 
-    if(todo.status == 'INPROGRESS') {
+    if (todo.status == 'INPROGRESS') {
       inProgressColumn.append(task);
     }
   });
@@ -158,22 +150,22 @@ export function setDragNDropListeners() {
     task.classList.remove('hide');
 
     const goalColumn = event.target.closest('.column');
-   
+   //нельзя перетаскивать в колонку deleted
     if (!goalColumn || goalColumn.id === 'deleted') {
       return;
     }
-
     goalColumn.classList.remove('hovered');
 
     // проверка auth
-
-    if(!getItemFromLS('auth')) {
+    if (!getItemFromLS('auth')) {
       alert('changing the status of tasks is available only for registered users');
       return;
     }
 
     let tasks = getItemFromLS('tasks');
-
+    //проверка перенесли мы перетаскиваемый таск в новую 
+    //колонку или кинули в ту же откуда и взяли ,тогда не меняем статус
+    //и обновляем tasks в LS
     const dragedTask = tasks.find(currentTask => currentTask.id == task.id);
     if (goalColumn.id.toUpperCase() !== dragedTask.status) {
       goalColumn.prepend(task);    
@@ -193,16 +185,17 @@ export function setDragNDropListeners() {
   let hoveredColumn;
   const dragOver = function(event) {
     event.preventDefault();
-
+    //если колонка deleted то не подсвечивается(на неё нельзя кинуть),
     const goalColumn = event.target.closest('.column');
     if (goalColumn && goalColumn.id === 'deleted') {
       return;
     }
+    //устанавливаем стиль(подсвечивание) при dropOver на неё(если ни одна колонка не подсвечена ещё)
     if (!hoveredColumn && goalColumn) {
       hoveredColumn = goalColumn;
       hoveredColumn.classList.add('hovered');
     }
-
+    //убираем стиль подсвечивания с колонки если dropOver не на одной из колонок 
     if (hoveredColumn && !goalColumn) {
       hoveredColumn.classList.remove('hovered');
       hoveredColumn = null;

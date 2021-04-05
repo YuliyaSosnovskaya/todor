@@ -16,7 +16,7 @@ export function createTask(todo, isDeleted) {
   task.className = 'task';
   task.id = todo.id;
   
-  /*draggable*/
+  //таск в колонке deleted нельзя перетаскивать 
   task.draggable = !isDeleted;
   taskIdAvatarContainer.className = 'task-id-avatar-container';
 
@@ -35,21 +35,21 @@ export function createTask(todo, isDeleted) {
 
   const priorityIcon = document.createElement('div');
   priorityIcon.className = 'task-priority-icon';
+  //нельзя перетаскивать иконки на тасках(т.к они картинки то по умолчанию таскаются)
   priorityIcon.draggable = false;
-
-  if(todo.priority === 'middle') {
+  //задаем стилти для разных приоритетов
+  if (todo.priority === 'middle') {
     priorityIcon.classList.add('priority-middle');
-
   }
-  if(todo.priority === 'low') {
+  if (todo.priority === 'low') {
     priorityIcon.classList.add('priority-low');
   }
-  if(todo.priority === 'height') {
-    priorityIcon.classList.add('priority-height');  }
+  if (todo.priority === 'height') {
+    priorityIcon.classList.add('priority-height'); 
+  }
 
   iconContainer.append(priorityIcon);
   iconContainer.append(containerForDelAndResol);
-
 
   if (isDeleted) {
     // create and append recovery icon
@@ -57,16 +57,18 @@ export function createTask(todo, isDeleted) {
     resolvedTaskIcon.className = 'task-delete-icon';
     resolvedTaskIcon.setAttribute('src','img/refund.png');
     containerForDelAndResol.append(resolvedTaskIcon);
-
     task.classList.add('taskInDeletedColumn')
     task.classList.add('forhoverTask');
-
+    //обработчин на иконку редактирования
     resolvedTaskIcon.addEventListener('click', function() {
-      if(!getItemFromLS('auth')) {
+      //проверяем или пользователь залогинен
+      if (!getItemFromLS('auth')) {
         alert('task recovery is available only for registered users');
         return;
       }
+      //достаем таски из LS
       const tasksFromLS = getItemFromLS('tasks');
+      //перезаписываем tasks в LS 
       setItemToLS('tasks', [todo, ...tasksFromLS]);
       appendTasksInColumns();
       counterTasks();
