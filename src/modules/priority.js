@@ -4,7 +4,7 @@ import {addTasksToDeletedColumn} from './deleted-column.js';
 import createSelect from './select-field.js';
 
 const optionsList = ['all','low','middle','height'];
-
+//создание priority select 
 export function createPrioritySelect() {
   const priorityContainer = document.createElement('div');
   priorityContainer.className = 'priority-container';
@@ -13,17 +13,21 @@ export function createPrioritySelect() {
   labelEl.className = 'priority-span';
   labelEl.innerHTML = 'Priority';
   priorityContainer.append(labelEl);
-
+  //достаем priority из SP(url)
   const priorityFromSp =  getSearchParams('priority');
+  //если в SP его нет то по умолчанию 'all'
   const priorityValue = priorityFromSp ? priorityFromSp : 'all';
-  
+  //создаем select для priority
   const selectDOMEl = createSelect(
     priorityValue,
     optionsList,
+    //колбэк при выборе нового значение
     function(newValue) {
+      //если all то удаляем из SP(url)
       if (newValue === 'all') {
         deleteSearchParams('priority');
       } else {
+        //иначе добавляем новое значение 
         setSearchParams('priority', newValue);
       }
       appendTasksInColumns();

@@ -1,7 +1,7 @@
 import {deleteTask, counterTasks} from './tasks.js';
 import {addTasksToDeletedColumn, counterForDeletedColumn} from './deleted-column.js';
 import { hideModalBackground } from '../utils/modal-background.js';
-
+//создание модалки на удаление таска
 export function createModal (todo) {
   const modalContainer = document.createElement('div');
   const header = document.createElement('div');
@@ -18,24 +18,22 @@ export function createModal (todo) {
   buttonDelete.id = 'buttonDelete';
   buttonDelete.innerHTML = 'Sure';
   buttonContainer.className = 'button-container';
-
   document.body.className = 'modal-out';
-  
+  //обработчик на кнопку cancel
   buttonCancel.addEventListener('click',function () {
     modalContainer.remove();
     hideModalBackground();
   });
-
+  //обработчик на кнопку delete
   buttonDelete.addEventListener('click',function () {
     deleteTask(todo);
     counterTasks();
     addTasksToDeletedColumn();
     counterForDeletedColumn();
+    //убираем модалку и серый фон
     modalContainer.remove();
     hideModalBackground();
   });
-
-  
 
   modalContainer.className = 'modal-container';
   modalContainer.id = 'modal-window';

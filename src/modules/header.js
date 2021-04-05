@@ -24,34 +24,34 @@ export function createHeader () {
   userName.className = 'hello';
   userName.id = 'logoName';
   buttonLogIn.innerHTML = 'log in';
-
+  //если выполнен вход то добавляем приветствие и меняем на log out
   const name = getItemFromLS('auth');
-  if(name) {
+  if (name) {
     userName.innerHTML = `Hi, ${name}`;
     buttonLogIn.innerHTML = 'log out';
   };
  
   containerForLogIn.prepend(userName);
-
+  //при клике на кнопку logIn
   buttonLogIn.addEventListener('click',function () {
     // проверить если auth что-то хранит
     // если да, то меняет на Log out и удаляем приветствие и удаляем auth из ls и return
     // иначе все остальное
     const authFromLs = getItemFromLS('auth');
-    if(authFromLs) {
-    userName.innerHTML = '';
-    buttonLogIn.innerHTML = 'log in';
-    removeItemFromLS('auth');
-    return;
-  };
-
+    if (authFromLs) {
+      userName.innerHTML = '';
+      buttonLogIn.innerHTML = 'log in';
+      removeItemFromLS('auth');
+      return;
+    };
     createAndAppendLogoModal();
     showModalBackground();
   })
   
   containerForLogIn.append(buttonLogIn);
   mainContainer.prepend(header);
-  dayNight ();
+  //add lamp
+  dayNight();
 }
 
 function createAndAppendLogoModal() {
@@ -99,7 +99,6 @@ function createAndAppendLogoModal() {
   passErrorSpan.innerHTML = 'error';
   passwordContainer.append(passErrorSpan);
 
-
   modalContainer.append(nickContainer);
   modalContainer.append(passwordContainer);
 
@@ -132,7 +131,9 @@ function createAndAppendLogoModal() {
       nickErrorSpan.classList.add('visible-error-span');
       return;
     }
+    //проверяем есть ли user c таким nickname
     const p = passwords[nickname];
+    //если нет то выводим ошибку что такого нет
     if(!p){
       nickErrorSpan.innerHTML = 'unknown nickname';
       nickErrorSpan.classList.add('visible-error-span');
@@ -145,26 +146,27 @@ function createAndAppendLogoModal() {
       passErrorSpan.classList.add('visible-error-span');
       return;
     }
+    //если пароль не совпадает то выводи ошибку
     if(p !== password) {
       passErrorSpan.innerHTML = 'password is wrong';
       passErrorSpan.classList.add('visible-error-span');
       return;
     }
-    
+    //добавляем auth в LS 
     setItemToLS('auth', nickname);
     const greetingDomEl = document.getElementById('logoName');
     greetingDomEl.innerHTML = `Hi, ${nickname}`;
-
+    //меняем login на logout
     const loginButton = document.getElementById('loginButton');
     loginButton.innerHTML = 'Log out';
-
+    //удаляем модалку и серую тень
     modalContainer.remove();
     hideModalBackground();
   })
-
+  modalContainer.id = 'modal-window';
   document.body.append(modalContainer);
 }
-
+//тема по умолчанию
 let theme = 'day';
 
 export function dayNight () {
@@ -173,32 +175,31 @@ export function dayNight () {
   icon.setAttribute('src','../../img/day.png');
   icon.className = 'icon';
   header.append(icon);
-
-  
-
-
+  //обработчик на клик lamp
   icon.addEventListener('click', function () {
     const priority = document.getElementsByClassName('priority-span')[0];
     const toggle = document.getElementsByClassName('span-checkbox')[0];
     const logo = document.getElementsByClassName('logo')[0];
     const loginButton = document.getElementById('loginButton');
-   if(theme == 'day') {
-     theme = 'night';
-     document.body.classList.add('body-night');
-     icon.setAttribute('src','../../img/night.png');
-     priority.classList.add('text-night');
-     toggle.classList.add('text-night');
-     logo.classList.add('text-night');
-     loginButton.classList.add('text-night');
-    return;
+    //если тема день то меняем ее на клик на ночь и меняем стили для некоторых деталей 
+    if (theme == 'day') {
+      theme = 'night';
+      document.body.classList.add('body-night');
+      icon.setAttribute('src','../../img/night.png');
+      priority.classList.add('text-night');
+      toggle.classList.add('text-night');
+      logo.classList.add('text-night');
+      loginButton.classList.add('text-night');
+      return;
     }
-     theme = 'day';
-     document.body.classList.remove('body-night');
-     icon.setAttribute('src','../../img/day.png');
-     priority.classList.remove('text-night');
-     toggle.classList.remove('text-night');
-     logo.classList.remove('text-night');
-     loginButton.classList.remove('text-night');
+    //иначе меняем тему на день и удаляем стили 
+    theme = 'day';
+    document.body.classList.remove('body-night');
+    icon.setAttribute('src','../../img/day.png');
+    priority.classList.remove('text-night');
+    toggle.classList.remove('text-night');
+    logo.classList.remove('text-night');
+    loginButton.classList.remove('text-night');
     
   })
 
