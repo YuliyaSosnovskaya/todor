@@ -16,7 +16,7 @@ export function createColumn(columnName) {
   if (columnName === 'todo') {
     // append plus icon to TODO column
     const plusIcon = document.createElement('img');
-    plusIcon.setAttribute('src', '../../img/svg');
+    plusIcon.setAttribute('src', '../../img/plus.svg');
     plusIcon.className = 'plus-icon';
     plusIcon.addEventListener('click', function() {
       //проверка или пользователь залогинился
