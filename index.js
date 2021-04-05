@@ -3,8 +3,8 @@ import {counterTasks} from './src/modules/tasks.js';
 import {createColumns, appendTasksInColumns, setDragNDropListeners} from './src/modules/columns.js';
 import {getItemFromLS, setItemToLS} from './src/utils/local-storage.js';
 import createAndAppendUsersSearchPanel from './src/modules/users-search-panel.js';
-import {createPrioritySelect} from '/src/modules/priority.js';
-import {createSearchDesc} from '/src/modules/searchByDescription.js';
+import {createPrioritySelect} from './src/modules/priority.js';
+import {createSearchDesc} from './src/modules/searchByDescription.js';
 import {createHeader} from './src/modules/header.js';
 
 createHeader();
