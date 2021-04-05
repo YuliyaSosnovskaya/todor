@@ -7,7 +7,7 @@ export function createSearchDesc () {
   descContainer.className = 'desc-container';
 
   const searchImg = document.createElement('img');
-  searchImg.src = '../../img/search.png';
+  searchImg.src = './img/search.png';
   searchImg.className = 'search-img';
   descContainer.append(searchImg);
 
