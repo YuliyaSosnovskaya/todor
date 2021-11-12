@@ -27,7 +27,6 @@ export function createPrioritySelect() {
       if (newValue === 'all') {
         deleteSearchParams('priority');
       } else {
-        //иначе добавляем новое значение 
         setSearchParams('priority', newValue);
       }
       appendTasksInColumns();

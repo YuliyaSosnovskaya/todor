@@ -1,6 +1,7 @@
 const mainModalContainer = document.getElementById('mainModalContainer');
 //при клике на серую тень удаяется mainModalContainer и убирается тень   
 mainModalContainer.addEventListener('click', () => {
+  
   document.getElementById('modal-window').remove();
   hideModalBackground();
 });

@@ -63,7 +63,7 @@ export default function createAndAppendUsersSearchPanel() {
   
   // массив всех иконок с юзерами 
   const usersElements = document.getElementsByClassName('search-user');
-  // set events handlers (обработчики событий) to all users elements
+  // set events handlers to all users elements
   for (let userEl of usersElements) {
     //курсор над элементом 
     userEl.addEventListener('mouseover', function () {
@@ -79,7 +79,7 @@ export default function createAndAppendUsersSearchPanel() {
       const avatarEl = userEl.getElementsByClassName('container-for-avatar')[0];
       avatarEl.classList.remove('container-for-avatar-hover');
     });
-    // обработчик на клик 
+    
     userEl.addEventListener('click', function () {
       // если кликнули по новому юзеру
       if (userElIdAttribute !== userEl.id) {

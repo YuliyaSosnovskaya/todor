@@ -59,7 +59,6 @@ export function addTasksToDeletedColumn() {
     if (userId !== 0) {
       filteredTasks = filteredTasks.filter(task => task.userId === userId)
     }
-
     // filter by priority
     if (priority) {
       filteredTasks = filteredTasks.filter(task => task.priority === priority);

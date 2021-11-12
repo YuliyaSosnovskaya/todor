@@ -49,4 +49,4 @@ export default [
     avatar : './img/monster2.png',
     name : 'Svetlana'
   }
-]
+];

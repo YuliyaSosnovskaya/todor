@@ -90,7 +90,7 @@ export function createDetailModal (isNew, taskId) {
   modalDetailContainer.append(dropdawnContainer);
 
   //два дропдауна 
-  //
+  
   let currentPriority = todo.priority;
   let priority = ['low','middle','height'];
   //функция колбэк при выборе нового option(priority)
@@ -148,13 +148,13 @@ export function createDetailModal (isNew, taskId) {
   //обрабочик на save
   buttonSave.addEventListener('click', function () {
     let newDescr =  descrTextarea.value;
-    //валидация на textarea (если поле пустое)
+    //валидация textarea (если поле пустое)
     if (newDescr.trim().length === 0) {
       descrTextarea.classList.add('invalid-textarea');
       return;
     }
     //переопределяем task (меняем описание, меняем user на новый выбранный)
-    let newUser = userSelectButton.innerHTML;
+    // let newUser = userSelectButton.innerHTML;
     todo.title = newDescr;
     //если это новый таск то добавляем его вперед всех тасков в LS
     if (isNew) {

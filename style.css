@@ -313,7 +313,7 @@ background: #4e49493a;
 
 /*for drag&drop*/
 .hide {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 .hovered {
   filter: brightness(0.9);
@@ -686,4 +686,11 @@ textarea {
 }
 .text-night {
   color:#d5dde1;
+}
+.userPanel-night {
+  background-color: #c5c9e900;
+  border-color: #c5cae900;
+}
+.userPanel-night > div >p {
+  color: #ffffffb0;
 }

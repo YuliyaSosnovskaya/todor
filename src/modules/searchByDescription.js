@@ -33,6 +33,7 @@ export function createSearchDesc () {
       deleteSearchParams('desc');
       appendTasksInColumns();
       addTasksToDeletedColumn();
+    
     }
     
   })

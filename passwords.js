@@ -1,4 +1,4 @@
-export default{
+export default {
   Sergio:'password',
   Kevin:'password',
   Yuliya:'password',

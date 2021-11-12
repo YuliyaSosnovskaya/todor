@@ -181,6 +181,7 @@ export function dayNight () {
     const toggle = document.getElementsByClassName('span-checkbox')[0];
     const logo = document.getElementsByClassName('logo')[0];
     const loginButton = document.getElementById('loginButton');
+    const usersPanel = document.getElementById('sort-container');
     //если тема день то меняем ее на клик на ночь и меняем стили для некоторых деталей 
     if (theme == 'day') {
       theme = 'night';
@@ -190,6 +191,8 @@ export function dayNight () {
       toggle.classList.add('text-night');
       logo.classList.add('text-night');
       loginButton.classList.add('text-night');
+      usersPanel.classList.add('userPanel-night');
+
       return;
     }
     //иначе меняем тему на день и удаляем стили 
@@ -200,7 +203,7 @@ export function dayNight () {
     toggle.classList.remove('text-night');
     logo.classList.remove('text-night');
     loginButton.classList.remove('text-night');
-    
+    usersPanel.classList.remove('userPanel-night');
   })
 
 }

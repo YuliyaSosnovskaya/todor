@@ -117,7 +117,6 @@ export function appendTasksInColumns() {
   if (userId !== 0) {
     filteredTasks = filteredTasks.filter(task => task.userId === userId)
   }
-
   // filter by priority
   if (priority) {
     filteredTasks = filteredTasks.filter(task => task.priority === priority);
@@ -143,7 +142,7 @@ export function appendTasksInColumns() {
 
   counterTasks();
 }
-
+//DRAGDROP
 export function setDragNDropListeners() {
   let task;
   const dragDrop = function(event) {

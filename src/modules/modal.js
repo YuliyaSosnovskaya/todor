@@ -18,13 +18,16 @@ export function createModal (todo) {
   buttonDelete.id = 'buttonDelete';
   buttonDelete.innerHTML = 'Sure';
   buttonContainer.className = 'button-container';
-  document.body.className = 'modal-out';
+  document.body.classList.add('modal-out');
   //обработчик на кнопку cancel
+
+  debugger;
   buttonCancel.addEventListener('click',function () {
     modalContainer.remove();
     hideModalBackground();
   });
   //обработчик на кнопку delete
+  debugger;
   buttonDelete.addEventListener('click',function () {
     deleteTask(todo);
     counterTasks();
